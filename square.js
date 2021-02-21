@@ -4,17 +4,23 @@ canvas.width = 500
 canvas.height = 500
 document.body.appendChild(canvas)
 
-var gl = canvas.getContext('webgl')
+var gl = canvas.getContext('webgl2')
 
-gl.clearColor(1, 176, 199, 159)
+const getGLColor = (r, g, b, a) => {
+  gl.clearColor(r/255, g/255, b/255, a);
+}
+
+getGLColor(120, 105, 122, 1)
 gl.clear(gl.COLOR_BUFFER_BIT)
+
+
+var aspect = canvas.width / canvas.height;
 
 // Prepare vertices
 var vertices = new Float32Array([
-  -0.5,-0.5,
-  0.5,-0.5,
-  0.0,0.5
-])
+  -0.5, 0.5*aspect, 0.5, 0.5*aspect, 0.5,-0.5*aspect, // Triangle 1
+  -0.5, 0.5*aspect, 0.5,-0.5*aspect, -0.5,-0.5*aspect // Triangle 2
+  ]);
 
 // Prepare Vertex
 const vert = `
@@ -57,8 +63,12 @@ gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
 gl.useProgram(program)
 
 // Set the color
+const getArrColor = (r,g,b,a) => {
+  return [r/255, g/255, b/255, a]
+}
+
 program.color = gl.getUniformLocation(program, 'color')
-gl.uniform4fv(program.color, [1.0, 1.0, 0.0, 1.0])
+gl.uniform4fv(program.color, getArrColor(180, 255, 0, 1))
 
 // Set the position
 program.position = gl.getAttribLocation(program, 'position')
@@ -66,3 +76,4 @@ gl.enableVertexAttribArray(program.position)
 gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
 
 gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2)
+console.log(vertices.length)
