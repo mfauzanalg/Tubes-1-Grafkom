@@ -6,11 +6,7 @@ document.body.appendChild(canvas)
 
 var gl = canvas.getContext('webgl2')
 
-const getGLColor = (r, g, b, a) => {
-  gl.clearColor(r/255, g/255, b/255, a);
-}
-
-getGLColor(120, 105, 122, 1)
+getGLColor(30, 137, 143, 1)
 gl.clear(gl.COLOR_BUFFER_BIT)
 
 
@@ -62,11 +58,6 @@ gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
 // Use the program
 gl.useProgram(program)
 
-// Set the color
-const getArrColor = (r,g,b,a) => {
-  return [r/255, g/255, b/255, a]
-}
-
 program.color = gl.getUniformLocation(program, 'color')
 gl.uniform4fv(program.color, getArrColor(180, 255, 0, 1))
 
@@ -75,5 +66,4 @@ program.position = gl.getAttribLocation(program, 'position')
 gl.enableVertexAttribArray(program.position)
 gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
 
-gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2)
-console.log(vertices.length)
+gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 2)

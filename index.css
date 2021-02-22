@@ -2,3 +2,17 @@
   padding: 0;
   margin: 0;
 }
+
+.tools-container {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.button {
+  padding: 10px;
+}
+
+canvas{
+  border: 1px solid black;
+  background-color: rgb(219, 219, 219);
+}
