@@ -32,20 +32,25 @@ var mouseMove = function(e) {
         getCoorX(x_two), 
         getCoorY(y_two),
       ]
+      renderAll(drawMethod, verticesArr)
       render(drawMethod, verticesArr)
     }
   }
-
-  e.preventDefault();
 };
 
 var mouseUp = function(e){
   if (!isDrawing && geoObject != '') {
-    render(drawMethod, verticesArr)
+    const shape = {
+      method: drawMethod,
+      vertices: verticesArr
+    }
+    
+    allShapes.push(shape)
+    renderAll(drawMethod, verticesArr)
     geoObject = ""
   }
 };
 
-canvas.addEventListener("mousedown", mouseDown, false);
-canvas.addEventListener("mouseup", mouseUp, false);
-canvas.addEventListener("mousemove", mouseMove, false);
+canvas.addEventListener("mousedown", mouseDown);
+canvas.addEventListener("mouseup", mouseUp);
+canvas.addEventListener("mousemove", mouseMove);

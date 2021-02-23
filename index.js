@@ -27,13 +27,6 @@ gl.attachShader(program, vertexShader)
 gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 
-
-// var vertices1 = new Float32Array([0,0,1,1]);
-// var vertices2 = new Float32Array([0,1,-1,-1]);
-
-// // render(gl.LINE_STRIP, vertices1)
-// // render(gl.LINE_STRIP, vertices2)
-
 function render(type, vertices) {
   var n = initBuffers(new Float32Array(vertices));
   gl.drawArrays(type, 0, n);
@@ -58,4 +51,10 @@ function initBuffers(vertices) {
   gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
 
   return vertices.length/2;
+}
+
+const renderAll = () => {
+   allShapes.forEach((shape) => {
+     render(shape.method, shape.vertices)
+   })
 }

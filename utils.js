@@ -27,3 +27,5 @@ var geoObject = ''
 const drawObject = (objectName) => {
   geoObject = objectName
 }
+
+var allShapes = []
