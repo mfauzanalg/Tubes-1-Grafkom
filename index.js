@@ -28,7 +28,6 @@ gl.attachShader(program, vertexShader)
 gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 
-
 const render = (drawMethod, verticesArr) => {  
   // Prepare vertices
   var vertices = new Float32Array(verticesArr);
