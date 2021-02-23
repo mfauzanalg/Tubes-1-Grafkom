@@ -12,7 +12,7 @@ var mouseDown = function(e) {
   if(geoObject != ''){
     x_one = e.pageX 
     y_one = e.pageY;
-    if (geoObject == "line" || geoObject == "polygon"){
+    if (geoObject == "line"){
       isDrawing = !isDrawing;
     }
   }
