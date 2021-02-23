@@ -4,4 +4,4 @@ canvas.width = canvasWidth
 canvas.height = canvasHeight
 document.body.appendChild(canvas)
 
-var gl = canvas.getContext('webgl2')
+var gl = canvas.getContext('webgl')

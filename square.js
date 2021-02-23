@@ -7,7 +7,6 @@ document.body.appendChild(canvas)
 var gl = canvas.getContext('webgl2')
 
 getGLColor(30, 137, 143, 1)
-gl.clear(gl.COLOR_BUFFER_BIT)
 
 
 var aspect = canvas.width / canvas.height;

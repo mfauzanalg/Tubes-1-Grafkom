@@ -1,4 +1,3 @@
-
 // Prepare Vertex
 const vert = `
 attribute vec2 position;
@@ -28,26 +27,35 @@ gl.attachShader(program, vertexShader)
 gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 
-const render = (drawMethod, verticesArr) => {  
-  // Prepare vertices
-  var vertices = new Float32Array(verticesArr);
-  
+
+// var vertices1 = new Float32Array([0,0,1,1]);
+// var vertices2 = new Float32Array([0,1,-1,-1]);
+
+// // render(gl.LINE_STRIP, vertices1)
+// // render(gl.LINE_STRIP, vertices2)
+
+function render(type, vertices) {
+  var n = initBuffers(new Float32Array(vertices));
+  gl.drawArrays(type, 0, n);
+}
+
+function initBuffers(vertices) {
   // Binding data
   var buffer = gl.createBuffer()
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
-  
+
   // Use the program
   gl.useProgram(program)
-  
+
   // Set the color
   program.color = gl.getUniformLocation(program, 'color')
   gl.uniform4fv(program.color, getArrColor(0, 0, 0, 1))
-  
+
   // Set the position
   program.position = gl.getAttribLocation(program, 'position')
   gl.enableVertexAttribArray(program.position)
   gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
-  
-  gl.drawArrays(drawMethod, 0, vertices.length / 2)
+
+  return vertices.length/2;
 }

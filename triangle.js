@@ -6,12 +6,8 @@ document.body.appendChild(canvas)
 
 var gl = canvas.getContext('webgl2')
 
-const getGLColor = (r, g, b, a) => {
-  gl.clearColor(r/255, g/255, b/255, a);
-}
 
 getGLColor(120, 105, 122, 1)
-gl.clear(gl.COLOR_BUFFER_BIT)
 
 // Prepare vertices
 var vertices = new Float32Array([
