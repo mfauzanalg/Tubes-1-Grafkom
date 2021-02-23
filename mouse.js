@@ -37,23 +37,31 @@ var mouseDown = function(e) {
 
 var renderSquare = () => {
   const size = 80
-    x_one = x_one - size/2
-    y_one = y_one + size/2
-    x_two = x_one + size
-    y_two = y_one
+  if(x_one < 40){
+    x_one = 40
+  }
 
-    drawMethod = gl.TRIANGLE_STRIP
-    verticesArr = [
-      getCoorX(x_one), 
-      getCoorY(y_one), 
-      getCoorX(x_two), 
-      getCoorY(y_two),
+  if (y_one < 40){
+    y_one = 40
+  }
+  
+  x_one = x_one - size/2
+  y_one = y_one + size/2
+  x_two = x_one + size
+  y_two = y_one
 
-      getCoorX(x_one), 
-      getCoorY(y_one - size), 
-      getCoorX(x_two), 
-      getCoorY(y_two - size),
-    ]
+  drawMethod = gl.TRIANGLE_STRIP
+  verticesArr = [
+    getCoorX(x_one), 
+    getCoorY(y_one), 
+    getCoorX(x_two), 
+    getCoorY(y_two),
+
+    getCoorX(x_one), 
+    getCoorY(y_one - size), 
+    getCoorX(x_two), 
+    getCoorY(y_two - size),
+  ]
 }
 
 var mouseMove = function(e) {
@@ -77,6 +85,15 @@ var mouseMove = function(e) {
   if (geoObject == "square"){
     x_one = e.pageX
     y_one = e.pageY
+
+    if(x_one < 40){
+      x_one = 40
+    }
+
+    if (y_one < 40){
+      y_one = 40
+    }
+
     renderSquare()
     render(drawMethod, verticesArr)
     renderAll()

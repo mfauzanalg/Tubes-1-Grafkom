@@ -3,6 +3,15 @@ const canvasHeight = 500
 const middleX = canvasWidth/2
 const middleY = canvasHeight/2
 
+function hexToRgbNew(hex) {
+  var arrBuff = new ArrayBuffer(4);
+  var vw = new DataView(arrBuff);
+  vw.setUint32(0,parseInt(hex, 16),false);
+  var arrByte = new Uint8Array(arrBuff);
+
+  return [arrByte[1], arrByte[2], arrByte[3]]
+}
+
 const getArrColor = (r,g,b,a) => {
   return [r/255, g/255, b/255, a]
 }

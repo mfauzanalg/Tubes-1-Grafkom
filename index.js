@@ -42,15 +42,18 @@ function initBuffers(vertices) {
   gl.useProgram(program)
 
   // Set the color
+  var hexVal =  document.getElementById("color-input").value
+  var rgbVal = hexToRgbNew(hexVal.replace('#',''))
+
   program.color = gl.getUniformLocation(program, 'color')
-  gl.uniform4fv(program.color, getArrColor(0, 0, 0, 1))
+  gl.uniform4fv(program.color, getArrColor(rgbVal[0], rgbVal[1], rgbVal[2], 1))
 
   // Set the position
   program.position = gl.getAttribLocation(program, 'position')
   gl.enableVertexAttribArray(program.position)
   gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
 
-  return vertices.length/2;
+  return vertices.length / 2;
 }
 
 const renderAll = () => {
