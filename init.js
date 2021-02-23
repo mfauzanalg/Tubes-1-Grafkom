@@ -1,7 +1,7 @@
 // Prepare canvas
 var canvas = document.createElement('canvas')
-canvas.width = 500
-canvas.height = 500
+canvas.width = canvasWidth
+canvas.height = canvasHeight
 document.body.appendChild(canvas)
 
 var gl = canvas.getContext('webgl2')

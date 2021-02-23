@@ -1,44 +1,37 @@
-const render = () => {
-  var aspect = canvas.width / canvas.height;
-  // gl.clear(gl.COLOR_BUFFER_BIT)
-  
+
+// Prepare Vertex
+const vert = `
+attribute vec2 position;
+  void main() {
+    gl_Position = vec4(position, 0.0, 1.0);
+  }
+`
+// Prepare Fragment
+const frag = `
+precision highp float;
+uniform vec4 color;
+void main() {
+  gl_FragColor = color;
+}
+`
+
+var vertexShader = gl.createShader(gl.VERTEX_SHADER)
+gl.shaderSource(vertexShader, vert)
+gl.compileShader(vertexShader)
+
+var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
+gl.shaderSource(fragmentShader, frag)
+gl.compileShader(fragmentShader)
+
+var program = gl.createProgram()
+gl.attachShader(program, vertexShader)
+gl.attachShader(program, fragmentShader)
+gl.linkProgram(program)
+
+
+const render = (drawMethod, verticesArr) => {  
   // Prepare vertices
-  var vertices = new Float32Array([
-    -0.5, 0.5*aspect, 0.5, 0.5*aspect, 0.5,-0.5*aspect, // Triangle 1
-    -0.5, 0.5*aspect, 0.5,-0.5*aspect, -0.5,-0.5*aspect // Triangle 2
-    ]);
-  
-  // Prepare Vertex
-  const vert = `
-  attribute vec2 position;
-    void main() {
-      gl_Position = vec4(position, 0.0, 1.0);
-    }
-  `
-  
-  var vertexShader = gl.createShader(gl.VERTEX_SHADER)
-  gl.shaderSource(vertexShader, vert)
-  gl.compileShader(vertexShader)
-  
-  
-  // Prepare Fragment
-  const frag = `
-    precision highp float;
-    uniform vec4 color;
-    void main() {
-      gl_FragColor = color;
-    }
-  `
-  
-  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
-  gl.shaderSource(fragmentShader, frag)
-  gl.compileShader(fragmentShader)
-  
-  var program = gl.createProgram()
-  gl.attachShader(program, vertexShader)
-  gl.attachShader(program, fragmentShader)
-  gl.linkProgram(program)
-  
+  var vertices = new Float32Array(verticesArr);
   
   // Binding data
   var buffer = gl.createBuffer()
@@ -56,5 +49,5 @@ const render = () => {
   gl.enableVertexAttribArray(program.position)
   gl.vertexAttribPointer(program.position, 2, gl.FLOAT, false, 0, 0)
   
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertices.length / 2)
+  gl.drawArrays(drawMethod, 0, vertices.length / 2)
 }
