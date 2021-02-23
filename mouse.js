@@ -8,13 +8,15 @@ var drawMethod;
 var verticesArr;
 var isDrawing = false;
 
-var mouseDown = function(e) {
-  x_one = e.pageX 
-  y_one = e.pageY;
-  isDrawing = !isDrawing;
 
-  e.preventDefault();
-  return false;
+var mouseDown = function(e) {
+  if(geoObject != ''){
+    x_one = e.pageX 
+    y_one = e.pageY;
+    isDrawing = !isDrawing;
+    e.preventDefault();
+    return false;
+  }
 };
 
 var mouseMove = function(e) {
@@ -38,7 +40,8 @@ var mouseMove = function(e) {
 };
 
 var mouseUp = function(e){
-  if (!isDrawing) {
+  if (!isDrawing && geoObject != '') {
+    render(drawMethod, verticesArr)
     geoObject = ""
   }
 };

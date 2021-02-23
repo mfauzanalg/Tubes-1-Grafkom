@@ -41,8 +41,9 @@ const render = (drawMethod, verticesArr) => {
   // Use the program
   gl.useProgram(program)
   
+  // Set the color
   program.color = gl.getUniformLocation(program, 'color')
-  gl.uniform4fv(program.color, getArrColor(30, 137, 143, 1))
+  gl.uniform4fv(program.color, getArrColor(0, 0, 0, 1))
   
   // Set the position
   program.position = gl.getAttribLocation(program, 'position')
