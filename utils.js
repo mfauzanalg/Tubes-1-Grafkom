@@ -9,7 +9,7 @@ const getArrColor = (r,g,b,a) => {
 
 const getCoorX = (x) => {
   var coorX = 0
-  if(x !== 0){
+  if(x >= 0){
     coorX = (x - middleX) / middleX
   }
   return coorX
@@ -17,7 +17,7 @@ const getCoorX = (x) => {
 
 const getCoorY = (y) => {
   var coorY = 0
-  if(y !== 0){
+  if(y >= 0){
     coorY = -1 * (y - middleY) / middleY
   }
   return coorY
