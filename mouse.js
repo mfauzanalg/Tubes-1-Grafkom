@@ -5,8 +5,28 @@ var x_one, x_two, y_one, y_two
 
 // Type object
 var drawMethod;
-var verticesArr;
+var verticesArr = [];
 var isDrawing = false;
+
+
+const drawPoly = () => {
+  var polyArr = [];
+  var n = parseInt(document.getElementById('number-input').value)
+  var r = 0.2
+  for (i = 0; i < n; i++) {
+    var x = r * Math.cos(2 * Math.PI * i / n) 
+    var y = r * Math.sin(2 * Math.PI * i / n)
+    polyArr.push(x)
+    polyArr.push(y)
+  }
+
+  const shape = {
+    method: gl.TRIANGLE_FAN,
+    vertices: polyArr
+  }
+  allShapes.push(shape)
+  renderAll()
+}
 
 var mouseDown = function(e) {
   if(geoObject != ''){
