@@ -40,10 +40,6 @@ const renderPoly = (coorX, coorY) => {
 
 
 var mouseDown = function(e) {
-  // console.log(getCoorX(e.pageX),getCoorY(e.pageY));
-  // console.log(allShapes)
-  // console.log(gl.TRIANGLE_FAN);
-
   if(isResizing) {
     isResizing = false
     resizePoints = []
@@ -64,7 +60,6 @@ var mouseDown = function(e) {
             for (var j=0; j<allShapes[i].vertices.length;j=j+2){
               points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
             }
-            // console.log(points);
             if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
               found = true;
               change = 0;
@@ -72,7 +67,6 @@ var mouseDown = function(e) {
             }
           
       }
-      // console.log(found);
       if(found){
         allShapes[i].rgbVal = colorRGB;
         renderAll();
@@ -165,7 +159,6 @@ var mouseMove = function(e) {
   x_two = e.pageX
   y_two = e.pageY
 
-  // console.log(isDrawing)
   if (isDrawing && geoObject != ""){
     if (geoObject == "line"){
       drawMethod = gl.LINE_STRIP
@@ -176,13 +169,11 @@ var mouseMove = function(e) {
         getCoorY(y_two),
       ]
     } else if (geoObject == "square"){
-      // console.log ([getCoorX(x_two),getCoorY(y_two)])
       drawMethod = gl.TRIANGLE_FAN
       var size_x = x_two - x_one
       var size_y = y_two - y_one
 
       var distance = Math.sqrt(Math.pow(size_x,2)+Math.pow(size_y,2))
-      // console.log("Distance: "+distance)
       x_two = x_one + (distance*Math.sign(size_x))
       y_two = y_one + (distance*Math.sign(size_y))
 
@@ -234,7 +225,6 @@ var mouseMove = function(e) {
 var mouseUp = function(e){
   if (!isDrawing && geoObject != '') {
     if (geoObject == 'line'){
-      // console.log("Not drawing line down")
       const shape = {
         method: drawMethod,
         vertices: verticesArr,
@@ -245,7 +235,6 @@ var mouseUp = function(e){
       renderAll()
       geoObject = ""
     } else if (geoObject == 'square'){
-      // console.log("Not drawing square up")
       const shape = {
         method: drawMethod,
         vertices: verticesArr,

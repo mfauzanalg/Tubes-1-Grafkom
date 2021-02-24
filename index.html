@@ -15,7 +15,7 @@
       <button class="button" onclick="drawObject('polygon')">Polygon</button>
       <button class="button" id="non-poly" onclick="drawObject('random')">Non Simetri Poly</button>
       <button class="button" onclick="downloadObjectAsJson()">Download</button>
-      <button class="button" onclick="clickChange()">Change</button>
+      <button class="button" id="non-poly" onclick="clickChange()">Change Color</button>
       <button class="button" onclick="clickResize()">Resize</button>
       <input id="size-input" type="number" min="1" value="80">
       <label>Ukuran</label>
@@ -44,7 +44,7 @@
         <ul>
           <div class="title-help">Mengganti Attribut</div>
           <li>Terdapat input field ukuran dan jumlah side</li>
-          <li>Field ukuran digunakan untuk mengatur ukuran Polygon Simetri</li>
+          <li>Field ukuran digunakan untuk mengatur ukuran Polygon Simetri dan Square</li>
           <li>Field jumlah side digunakan untuk mengatur jumlah sisi dari Polygon</li>
           <li>Terdapat pula Color Picker yang dapat digunakan untuk mengganti warna geometry yang ingin digambar</li>
         </ul>
@@ -52,8 +52,8 @@
         <ul>
           <div class="title-help">Memodifikasi Bentuk</div>
           <li>Bentuk-bentuk yang sudah digambar dapat diubah bentuknya dengan mengklik titik sudut yang ingin digeser, kemudian klik lokasi baru untuk titik sudut tersebut</li>
-          <li>Poligon yang sudah digambar dapat diganti warnanya dengan memilih warna, mengklik tombol Change, dan mengklik bentuk yang ingin diubah warnanya</li>
-          <li>Persegi yang sudah digambar dapat dimodifikasi ukurannya klik resize dan klik persegi yang ingin diubah ukurannya, lalu geser cursor sampai ukuran yang diinginkan</li>
+          <li>Poligon yang sudah digambar dapat diganti warnanya dengan memilih warna pada color picker, mengklik tombol Change Color, dan mengklik bentuk polygon yang ingin diubah warnanya</li>
+          <li>Persegi yang sudah digambar dapat dimodifikasi ukurannya dengan mengklik resize dan klik persegi yang ingin diubah ukurannya, lalu geser cursor sampai ukuran yang diinginkan</li>
         </ul>
         <br>
         <ul>
