@@ -55,3 +55,7 @@ const onClickHelp = () => {
   }
   isHelpActive = !isHelpActive
 }
+var change = 0;
+const clickChange = () => {
+  change = 1;
+}

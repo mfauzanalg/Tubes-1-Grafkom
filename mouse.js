@@ -28,6 +28,37 @@ const renderPoly = (coorX, coorY) => {
 }
 
 var mouseDown = function(e) {
+  console.log(change);
+  if(change == 1){
+      x_one = e.pageX;
+      y_one = e.pageY;
+      var found = false;
+      console.log(allShapes[0].method);
+      console.log(allShapes[0]);
+      console.log(colorRGB);
+      hexVal =  document.getElementById("color-input").value
+      colorRGB = hexToRgbNew(hexVal.replace('#',''))
+      for (var i=0 ; i<allShapes.length;i++) {
+          if(allShapes[i].method == 6){ //polygon
+            var points = []
+            for (var j=0; j<allShapes[i].vertices.length;j=j+2){
+              points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
+            }
+            console.log(points);
+            if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
+              found = true;
+              break;
+            }
+          }
+      }
+      console.log(found);
+      if(found){
+        allShapes[i].rgbVal = colorRGB;
+        renderAll();
+      }
+      
+      change = 0;
+  }
   if(geoObject != ''){
     x_one = e.pageX 
     y_one = e.pageY;
