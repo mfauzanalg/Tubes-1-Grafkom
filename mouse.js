@@ -61,9 +61,8 @@ var mouseDown = function(e) {
         allShapes[i].rgbVal = colorRGB;
         renderAll();
       }
-      
-      
   }
+
   if(resize == 1 && !isDrawing){
     x_one = e.pageX;
       y_one = e.pageY;
@@ -78,7 +77,6 @@ var mouseDown = function(e) {
               resize = 0;
               break;
             }
-          
       }
       // console.log(found);
       if(found){
@@ -278,6 +276,7 @@ var mouseUp = function(e){
     document.getElementById("moving-line").style.display = "none"
   }
 };
+
 var renderResize = (a,b) => {
   const size = parseInt(document.getElementById('size-input').value);
   var coorSize = size/500;
@@ -292,6 +291,7 @@ var renderResize = (a,b) => {
     b-coorSize
   ]
 }
+
 var renderSquare = () => {
   const size = parseInt(document.getElementById('size-input').value)
   if(x_one < 40){

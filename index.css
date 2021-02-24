@@ -63,3 +63,9 @@ label{
   display: none; 
   z-index: 999;
 }
+
+#non-poly{
+  font-size: 10px;
+  height: 40px;
+  padding: 3px;
+}
