@@ -163,28 +163,26 @@ var mouseMove = function(e) {
       ]
     } else if (geoObject == "square"){
       // console.log ([getCoorX(x_two),getCoorY(y_two)])
-      drawMethod = gl.TRIANGLES
+      drawMethod = gl.TRIANGLE_FAN
       var size_x = x_two - x_one
       var size_y = y_two - y_one
 
       var distance = Math.sqrt(Math.pow(size_x,2)+Math.pow(size_y,2))
       // console.log("Distance: "+distance)
-
       x_two = x_one + (distance*Math.sign(size_x))
       y_two = y_one + (distance*Math.sign(size_y))
 
-      // console.log("X1: "+x_one)
-      // console.log("X2: "+x_two)
-      // console.log("Y1: "+y_one)
-      // console.log("Y2: "+y_two)
+      x_left = Math.min(x_one, x_two)
+      x_right = Math.max(x_one, x_two)
+
+      y_up = Math.min(y_one,y_two)
+      y_down = Math.max(y_one, y_two)
       
       verticesArr = [
-        getCoorX(x_one), getCoorY(y_one), 
-        getCoorX(x_two), getCoorY(y_one),
-        getCoorX(x_two), getCoorY(y_two),
-        getCoorX(x_one), getCoorY(y_one), 
-        getCoorX(x_two), getCoorY(y_two),
-        getCoorX(x_one), getCoorY(y_two),
+        getCoorX(x_left), getCoorY(y_up), 
+        getCoorX(x_right), getCoorY(y_up),
+        getCoorX(x_right), getCoorY(y_down),
+        getCoorX(x_left), getCoorY(y_down)
       ]
     }
     renderAll()
