@@ -9,28 +9,21 @@ var verticesArr = [];
 var isDrawing = false;
 var hexVal;
 var colorRGB;
+var polyArr;
 
-const drawPoly = () => {
-  var polyArr = [];
+const renderPoly = (coorX, coorY) => {
+  polyArr = []
   var n = parseInt(document.getElementById('number-input').value)
   var r = 0.2
   for (i = 0; i < n; i++) {
-    var x = r * Math.cos(2 * Math.PI * i / n) 
-    var y = r * Math.sin(2 * Math.PI * i / n)
+    var x = coorX + r * Math.cos(2 * Math.PI * i / n) 
+    var y = coorY + r * Math.sin(2 * Math.PI * i / n)
     polyArr.push(x)
     polyArr.push(y)
   }
 
   hexVal =  document.getElementById("color-input").value
   colorRGB = hexToRgbNew(hexVal.replace('#',''))
-
-  const shape = {
-    method: gl.TRIANGLE_FAN,
-    vertices: polyArr,
-    rgbVal: colorRGB
-  }
-  allShapes.push(shape)
-  renderAll()
 }
 
 var mouseDown = function(e) {
@@ -47,6 +40,18 @@ var mouseDown = function(e) {
     const shape = {
       method: drawMethod,
       vertices: verticesArr,
+      rgbVal: colorRGB
+    }
+    allShapes.push(shape)
+    renderAll()
+    geoObject = ""
+  }
+
+  if (!isDrawing && geoObject == "polygon"){
+    renderPoly(getCoorX(e.pageX), getCoorY(e.pageY))
+    const shape = {
+      method: gl.TRIANGLE_FAN,
+      vertices: polyArr,
       rgbVal: colorRGB
     }
     allShapes.push(shape)
@@ -93,8 +98,8 @@ var mouseMove = function(e) {
     renderSquare()
     hexVal =  document.getElementById("color-input").value
     colorRGB = hexToRgbNew(hexVal.replace('#',''))
-    render(drawMethod, verticesArr, colorRGB)
-    renderAll()
+    // render(drawMethod, verticesArr, colorRGB)
+    // renderAll()
   }
 };
 
