@@ -4,7 +4,7 @@
 }
 
 .tools-container {
-  margin-top: 40px;
+  margin-top: 10px;
   margin-left: 10px;
   display: flex;
   align-items: center;
@@ -45,7 +45,8 @@ label{
 #help-content {
   margin-left: 20px;
   margin-top: 5px;
-  line-height: 22px;
+  line-height: 17px;
+  font-size: 13px;
   display: none;
 }
 
