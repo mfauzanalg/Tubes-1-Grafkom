@@ -140,10 +140,7 @@ var mouseDown = function(e) {
       })
 
       if(found){
-        if (allShapes[dragged.shape_id].method == gl.LINE_STRIP) drag = true
-        else {
-          dragged = {}
-        }
+        drag = true
       }
     }
   } else if (drag) drag = false
