@@ -34,8 +34,18 @@ const getCoorY = (y) => {
 }
 
 var geoObject = ''
+var isDrawingRandom = false
+var randomArr = []
+var nRandom = 0
+
 const drawObject = (objectName) => {
   geoObject = objectName
+
+  if (objectName == "random"){
+    nRandom = parseInt(document.getElementById('side-input').value)
+    isDrawingRandom = true
+    randomArr = []
+  }
 }
 
 var allShapes = []

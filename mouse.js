@@ -30,6 +30,7 @@ const renderPoly = (coorX, coorY) => {
   colorRGB = hexToRgbNew(hexVal.replace('#',''))
 }
 
+
 var mouseDown = function(e) {
   if(change == 1){
       x_one = e.pageX;
@@ -65,11 +66,17 @@ var mouseDown = function(e) {
     x_one = e.pageX 
     y_one = e.pageY;
     if (geoObject == "line"){
-      console.log("line down")
+      // console.log("line down")
       isDrawing = !isDrawing;
     } else if (geoObject == "square"){
       isDrawing = !isDrawing
-    }
+    } else if (geoObject == "random") {
+      if (nRandom) {
+        nRandom = nRandom - 1
+        randomArr.push(getCoorX(x_one))
+        randomArr.push(getCoorY(y_one))
+      }
+    } 
   }
 
   if (!isDrawing && !drag){
@@ -118,7 +125,7 @@ var mouseMove = function(e) {
   x_two = e.pageX
   y_two = e.pageY
 
-  console.log(isDrawing)
+  // console.log(isDrawing)
   if (isDrawing && geoObject != ""){
     if (geoObject == "line"){
       drawMethod = gl.LINE_STRIP
@@ -129,21 +136,21 @@ var mouseMove = function(e) {
         getCoorY(y_two),
       ]
     } else if (geoObject == "square"){
-      console.log ([getCoorX(x_two),getCoorY(y_two)])
+      // console.log ([getCoorX(x_two),getCoorY(y_two)])
       drawMethod = gl.TRIANGLES
       var size_x = x_two - x_one
       var size_y = y_two - y_one
 
       var distance = Math.sqrt(Math.pow(size_x,2)+Math.pow(size_y,2))
-      console.log("Distance: "+distance)
+      // console.log("Distance: "+distance)
 
       x_two = x_one + (distance*Math.sign(size_x))
       y_two = y_one + (distance*Math.sign(size_y))
 
-      console.log("X1: "+x_one)
-      console.log("X2: "+x_two)
-      console.log("Y1: "+y_one)
-      console.log("Y2: "+y_two)
+      // console.log("X1: "+x_one)
+      // console.log("X2: "+x_two)
+      // console.log("Y1: "+y_one)
+      // console.log("Y2: "+y_two)
       
       verticesArr = [
         getCoorX(x_one), getCoorY(y_one), 
@@ -175,8 +182,19 @@ var mouseMove = function(e) {
     renderSquare()
     hexVal =  document.getElementById("color-input").value
     colorRGB = hexToRgbNew(hexVal.replace('#',''))
-    // render(drawMethod, verticesArr, colorRGB)
-    // renderAll()
+  }
+
+  if (isDrawingRandom) {
+    hexVal =  document.getElementById("color-input").value
+    colorRGB = hexToRgbNew(hexVal.replace('#',''))
+
+    const copyOfrandomArr = randomArr.slice()
+    copyOfrandomArr.push(getCoorX(x_two))
+    copyOfrandomArr.push(getCoorY(y_two))
+
+    render(gl.TRIANGLE_FAN, copyOfrandomArr, colorRGB)
+    render(gl.POINTS, copyOfrandomArr, [1,0,0])
+    renderAll()
   }
 
   else if (drag) {
@@ -189,7 +207,7 @@ var mouseMove = function(e) {
 var mouseUp = function(e){
   if (!isDrawing && geoObject != '') {
     if (geoObject == 'line'){
-      console.log("Not drawing line down")
+      // console.log("Not drawing line down")
       const shape = {
         method: drawMethod,
         vertices: verticesArr,
@@ -200,7 +218,7 @@ var mouseUp = function(e){
       renderAll()
       geoObject = ""
     } else if (geoObject == 'square'){
-      console.log("Not drawing square up")
+      // console.log("Not drawing square up")
       const shape = {
         method: drawMethod,
         vertices: verticesArr,
@@ -210,7 +228,22 @@ var mouseUp = function(e){
       renderAll()
       geoObject = ""
     }
-    
+  }
+
+  if (isDrawingRandom && nRandom == 0){
+    hexVal =  document.getElementById("color-input").value
+    colorRGB = hexToRgbNew(hexVal.replace('#',''))
+
+    const shape = {
+      method: gl.TRIANGLE_FAN,
+      vertices: randomArr,
+      rgbVal: colorRGB
+    }
+    allShapes.push(shape)
+    renderAll()
+    geoObject = ""
+    randomArr = []
+    isDrawingRandom = false
   }
 
   if (drag) {
