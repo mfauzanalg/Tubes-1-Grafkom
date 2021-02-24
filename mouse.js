@@ -33,6 +33,9 @@ const renderPoly = (coorX, coorY) => {
 
 
 var mouseDown = function(e) {
+  console.log(getCoorX(e.pageX),getCoorY(e.pageY));
+  console.log(allShapes)
+  console.log(gl.TRIANGLE_FAN);
   if(change == 1 && !isDrawing){
       x_one = e.pageX;
       y_one = e.pageY;
@@ -68,21 +71,24 @@ var mouseDown = function(e) {
       y_one = e.pageY;
       var found = false;
       for (var i=0 ; i<allShapes.length;i++) {
-            var points = []
-            for (var j=0; j<allShapes[i].vertices.length;j=j+2){
-              points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
-            }
-            if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
-              found = true;
-              resize = 0;
-              break;
-            }
+            if(allShapes[i].vertices.length == 8){
+              var points = []
+              for (var j=0; j<allShapes[i].vertices.length;j=j+2){
+                points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
+              }
+              if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
+                found = true;
+                resize = 0;
+                break;
+              }
+          }
       }
+      
+      
       // console.log(found);
       if(found){
-        renderResize((points[0][0]+points[3][0])/2, (points[0][1]+points[3][1])/2)
+        renderResize((points[0][0]+points[2][0])/2, (points[0][1]+points[2][1])/2)
         allShapes[i].vertices = resizeArr;
-        allShapes[i].drawMethod = gl.TRIANGLE_STRIP;
         renderAll();
         resize = 0;
       }
@@ -190,22 +196,22 @@ var mouseMove = function(e) {
     render(drawMethod, verticesArr, colorRGB)
   }
 
-  else if (geoObject == "square"){
-    x_one = e.pageX
-    y_one = e.pageY
+  // else if (geoObject == "square"){
+  //   x_one = e.pageX
+  //   y_one = e.pageY
 
-    if(x_one < 40){
-      x_one = 40
-    }
+  //   if(x_one < 40){
+  //     x_one = 40
+  //   }
 
-    if (y_one < 40){
-      y_one = 40
-    }
+  //   if (y_one < 40){
+  //     y_one = 40
+  //   }
 
-    renderSquare()
-    hexVal =  document.getElementById("color-input").value
-    colorRGB = hexToRgbNew(hexVal.replace('#',''))
-  }
+  //   renderSquare()
+  //   hexVal =  document.getElementById("color-input").value
+  //   colorRGB = hexToRgbNew(hexVal.replace('#',''))
+  // }
 
   if (isDrawingRandom) {
     hexVal =  document.getElementById("color-input").value
