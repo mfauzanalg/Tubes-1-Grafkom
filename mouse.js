@@ -283,10 +283,10 @@ var renderResize = (a,b) => {
     b+coorSize,
     a+coorSize,
     b+coorSize,
+    a+coorSize,
+    b-coorSize,
     a-coorSize,
     b-coorSize,
-    a+coorSize,
-    b-coorSize
   ]
 }
 
