@@ -10,11 +10,12 @@ var isDrawing = false;
 var hexVal;
 var colorRGB;
 var polyArr;
+var sideInput;
 
 const renderPoly = (coorX, coorY) => {
   polyArr = []
-  var n = parseInt(document.getElementById('number-input').value)
-  var r = 0.2
+  var n = parseInt(document.getElementById('side-input').value)
+  var r = parseInt(document.getElementById('size-input').value) * 0.0025
   for (i = 0; i < n; i++) {
     var x = coorX + r * Math.cos(2 * Math.PI * i / n) 
     var y = coorY + r * Math.sin(2 * Math.PI * i / n)
@@ -118,7 +119,7 @@ var mouseUp = function(e){
 };
 
 var renderSquare = () => {
-  const size = 80
+  const size = parseInt(document.getElementById('size-input').value)
   if(x_one < 40){
     x_one = 40
   }
