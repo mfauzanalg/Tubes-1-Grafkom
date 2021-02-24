@@ -65,22 +65,15 @@ var mouseDown = function(e) {
     x_one = e.pageX 
     y_one = e.pageY;
     if (geoObject == "line"){
+      console.log("line down")
       isDrawing = !isDrawing;
+    } else if (geoObject == "square"){
+      isDrawing = !isDrawing
     }
   }
 
   if (!isDrawing && !drag){
-    if (geoObject == "square"){
-      renderSquare()
-      const shape = {
-        method: drawMethod,
-        vertices: verticesArr,
-        rgbVal: colorRGB
-      }
-      allShapes.push(shape)
-      renderAll()
-      geoObject = ""
-    } else if (geoObject == "polygon"){
+    if (geoObject == "polygon"){
       renderPoly(getCoorX(e.pageX), getCoorY(e.pageY))
       const shape = {
         method: gl.TRIANGLE_FAN,
@@ -125,6 +118,7 @@ var mouseMove = function(e) {
   x_two = e.pageX
   y_two = e.pageY
 
+  console.log(isDrawing)
   if (isDrawing && geoObject != ""){
     if (geoObject == "line"){
       drawMethod = gl.LINE_STRIP
@@ -133,6 +127,31 @@ var mouseMove = function(e) {
         getCoorY(y_one), 
         getCoorX(x_two), 
         getCoorY(y_two),
+      ]
+    } else if (geoObject == "square"){
+      console.log ([getCoorX(x_two),getCoorY(y_two)])
+      drawMethod = gl.TRIANGLES
+      var size_x = x_two - x_one
+      var size_y = y_two - y_one
+
+      var distance = Math.sqrt(Math.pow(size_x,2)+Math.pow(size_y,2))
+      console.log("Distance: "+distance)
+
+      x_two = x_one + (distance*Math.sign(size_x))
+      y_two = y_one + (distance*Math.sign(size_y))
+
+      console.log("X1: "+x_one)
+      console.log("X2: "+x_two)
+      console.log("Y1: "+y_one)
+      console.log("Y2: "+y_two)
+      
+      verticesArr = [
+        getCoorX(x_one), getCoorY(y_one), 
+        getCoorX(x_two), getCoorY(y_one),
+        getCoorX(x_two), getCoorY(y_two),
+        getCoorX(x_one), getCoorY(y_one), 
+        getCoorX(x_two), getCoorY(y_two),
+        getCoorX(x_one), getCoorY(y_two),
       ]
     }
     renderAll()
@@ -169,15 +188,29 @@ var mouseMove = function(e) {
 
 var mouseUp = function(e){
   if (!isDrawing && geoObject != '') {
-    const shape = {
-      method: drawMethod,
-      vertices: verticesArr,
-      rgbVal: colorRGB
+    if (geoObject == 'line'){
+      console.log("Not drawing line down")
+      const shape = {
+        method: drawMethod,
+        vertices: verticesArr,
+        rgbVal: colorRGB
+      }
+      
+      allShapes.push(shape)
+      renderAll()
+      geoObject = ""
+    } else if (geoObject == 'square'){
+      console.log("Not drawing square up")
+      const shape = {
+        method: drawMethod,
+        vertices: verticesArr,
+        rgbVal: colorRGB
+      }
+      allShapes.push(shape)
+      renderAll()
+      geoObject = ""
     }
     
-    allShapes.push(shape)
-    renderAll()
-    geoObject = ""
   }
 };
 
