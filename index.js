@@ -25,15 +25,12 @@ function initBuffers(vertices, rgbVal) {
 }
 
 function renderPoints() {
-  const pointSize = 5/middleX
+  const pointSize = 10/middleX
   allShapes.forEach((shape, idx) => {
     var n = shape.vertices.length/2 // # of points
     for (var i = 0; i < n; i++){
       x = shape.vertices[i*2]-pointSize/2
       y = shape.vertices[i*2+1]-pointSize/2
-
-      console.log(x)
-      console.log(y)
 
       var pointVert = [
         x, y,
@@ -41,10 +38,17 @@ function renderPoints() {
         x, y+pointSize,
         x+pointSize, y+pointSize
       ]
+      point_obj.push({
+        shape_id: idx,
+        param: i,
+        vertex: pointVert
+      })
+      console.log(pointVert)
       render(gl.TRIANGLE_STRIP, pointVert, hexToRgbNew('000000'))
     }
   })
 }
+
 function downloadObjectAsJson(){
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allShapes));
   var downloadAnchorNode = document.createElement('a');
@@ -77,11 +81,15 @@ const renderAll = () => {
    renderPoints()
 }
 function inside(point, vs) {
+  console.log(vs)
   var x = point[0], y = point[1];
+  console.log([x,y])
   var inside = false;
   for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
       var xi = vs[i][0], yi = vs[i][1];
+      console.log('i '+[xi,yi])
       var xj = vs[j][0], yj = vs[j][1];
+      console.log('j '+[xj,yj])
       var intersect = ((yi > y) != (yj > y))
           && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
       if (intersect) inside = !inside;

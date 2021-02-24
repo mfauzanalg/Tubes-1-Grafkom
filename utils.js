@@ -2,6 +2,7 @@ const canvasWidth = 500
 const canvasHeight = 500
 const middleX = canvasWidth/2
 const middleY = canvasHeight/2
+var point_obj = []
 
 function hexToRgbNew(hex) {
   var arrBuff = new ArrayBuffer(4);

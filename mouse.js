@@ -1,4 +1,3 @@
-
 // Mouse Move
 var drag = false;
 var x_one, x_two, y_one, y_two
@@ -11,6 +10,10 @@ var hexVal;
 var colorRGB;
 var polyArr;
 var sideInput;
+var dragged = {
+  shape_id: null,
+  param: null
+}
 
 const renderPoly = (coorX, coorY) => {
   polyArr = []
@@ -28,7 +31,6 @@ const renderPoly = (coorX, coorY) => {
 }
 
 var mouseDown = function(e) {
-  console.log(change);
   if(change == 1){
       x_one = e.pageX;
       y_one = e.pageY;
@@ -67,29 +69,53 @@ var mouseDown = function(e) {
     }
   }
 
-  if (!isDrawing && geoObject == "square"){
-    renderSquare()
-    const shape = {
-      method: drawMethod,
-      vertices: verticesArr,
-      rgbVal: colorRGB
-    }
-    allShapes.push(shape)
-    renderAll()
-    geoObject = ""
-  }
+  if (!isDrawing && !drag){
+    if (geoObject == "square"){
+      renderSquare()
+      const shape = {
+        method: drawMethod,
+        vertices: verticesArr,
+        rgbVal: colorRGB
+      }
+      allShapes.push(shape)
+      renderAll()
+      geoObject = ""
+    } else if (geoObject == "polygon"){
+      renderPoly(getCoorX(e.pageX), getCoorY(e.pageY))
+      const shape = {
+        method: gl.TRIANGLE_FAN,
+        vertices: polyArr,
+        rgbVal: colorRGB
+      }
+      allShapes.push(shape)
+      renderAll()
+      geoObject = ""
+    } else if (geoObject == '') {
+      x_one = e.pageX
+      y_one = e.pageY
 
-  if (!isDrawing && geoObject == "polygon"){
-    renderPoly(getCoorX(e.pageX), getCoorY(e.pageY))
-    const shape = {
-      method: gl.TRIANGLE_FAN,
-      vertices: polyArr,
-      rgbVal: colorRGB
+      var pos = [getCoorX(x_one),getCoorY(y_one)]
+
+      var found = point_obj.some((val,idx) => {
+        var vert = []
+        for (var i = 0; i < val.vertex.length; i+=2){
+          vert.push([val.vertex[i],val.vertex[i+1]])
+        }
+        if (inside(pos, vert)){
+          dragged.shape_id = val.shape_id
+          dragged.param = val.param
+          return true
+        }
+      })
+
+      if(found){
+        if (allShapes[dragged.shape_id].method == gl.LINE_STRIP) drag = true
+        else {
+          dragged = {}
+        }
+      }
     }
-    allShapes.push(shape)
-    renderAll()
-    geoObject = ""
-  }
+  } else if (drag) drag = false
 
   e.preventDefault();
   return false;
@@ -115,7 +141,7 @@ var mouseMove = function(e) {
     render(drawMethod, verticesArr, colorRGB)
   }
 
-  if (geoObject == "square"){
+  else if (geoObject == "square"){
     x_one = e.pageX
     y_one = e.pageY
 
@@ -132,6 +158,12 @@ var mouseMove = function(e) {
     colorRGB = hexToRgbNew(hexVal.replace('#',''))
     // render(drawMethod, verticesArr, colorRGB)
     // renderAll()
+  }
+
+  else if (drag) {
+    allShapes[dragged.shape_id].vertices[dragged.param*2] = getCoorX(x_two)
+    allShapes[dragged.shape_id].vertices[dragged.param*2+1] = getCoorY(y_two)
+    renderAll()
   }
 };
 
