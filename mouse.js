@@ -84,6 +84,7 @@ var mouseDown = function(e) {
         allShapes[i].vertices = resizeArr;
         allShapes[i].drawMethod = gl.TRIANGLE_STRIP;
         renderAll();
+        resize = 0;
       }
   }
   if(geoObject != ''){
