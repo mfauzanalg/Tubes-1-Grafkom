@@ -38,3 +38,20 @@ const drawObject = (objectName) => {
 }
 
 var allShapes = []
+
+var isHelpActive = false;
+const onClickHelp = () => {
+  const helpBtn = document.getElementById("help-button")
+  const content = document.getElementById("help-content")
+  if (!isHelpActive){
+    // activating
+    helpBtn.innerHTML = "Hide Help"
+    content.style.display = "block"
+  }
+  else {
+    // deactivating
+    helpBtn.innerHTML = "Show Help"
+    content.style.display = "none"
+  }
+  isHelpActive = !isHelpActive
+}

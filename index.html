@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>WebGL - Simple Triagle</title>
+    <title>WebGL - IF3260</title>
     <link rel="stylesheet" href="./index.css">
   </head>
   <body>
@@ -21,6 +21,32 @@
       <input id="color-input" type="color" name="head" value="#386299">
       <label>Color Picker</label>
       <input type = "file" id="fileinput"\>
+    </div>
+    <div id="help">
+      <button class="button" id="help-button" onclick="onClickHelp()">Show Help</button>
+      <div id="help-content">
+        <div class="title-help">Menggambar Bentuk</div>
+        <ul>
+          <li>Terdapat tombol Line, Square dan Polygon untuk menggambar geometry</li>
+          <li>Tekan salah satu tombol tersebut, lalu pilih coordinat posisi dengan mengklik pada canvas</li>
+          <li>Untuk Line, diperlukan dua kali klik untuk menentukan titik awal dan titik akhir garis</li>
+          <li>Untuk Square dan Polygon, diperlukan satu kali klik untuk menentukan titik tengah geometry</li>
+        </ul>
+        <br>
+        <ul>
+          <div class="title-help">Mengganti Attribut</div>
+          <li>Terdapat input field ukuran dan jumlah side</li>
+          <li>Field ukuran digunakan untuk mengatur ukuran Square dan Polygon</li>
+          <li>Field jumlah side digunakan untuk mengatur jumlah sisi dari Polygon</li>
+          <li>Terdapat pula Color Picker yang dapat digunakan untuk mengganti warna geometry yang ingin digambar</li>
+        </ul>
+        <br>
+        <ul>
+          <div class="title-help">Menyimpan Hasil Gambar</div>
+          <li>Untuk menyimpan gambar pada canvas dapat menekan tombol Download</li>
+          <li>Untuk mengimport gambar yang pernah disimpan dapat menekan tombol Choose File</li>
+        </ul>
+      </div>
     </div>
     <script src="./picker.js"></script>
   </body>

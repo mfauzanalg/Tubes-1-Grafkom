@@ -35,3 +35,20 @@ canvas{
 label{
   margin-right: 10px;
 }
+
+#help{
+  position: fixed;
+  top: 10;
+  left: 510; 
+}
+
+#help-content {
+  margin-left: 20px;
+  margin-top: 5px;
+  line-height: 22px;
+  display: none;
+}
+
+.title-help {
+  font-weight: 800;
+}
