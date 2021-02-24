@@ -69,8 +69,12 @@ const onClickHelp = () => {
 var change = 0;
 const clickChange = () => {
   change = 1;
+  document.getElementById("moving-line").style.display = "block"
+  document.getElementById("moving-line").innerHTML = "Mengubah warna: Pilih satu polygon"
 }
 var resize = 0;
 const clickResize = () => {
   resize = 1;
+  document.getElementById("moving-line").style.display = "block"
+  document.getElementById("moving-line").innerHTML = "Mengubah ukuran: Pilih satu square "
 }

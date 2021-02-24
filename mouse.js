@@ -63,6 +63,7 @@ var mouseDown = function(e) {
             if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
               found = true;
               change = 0;
+              document.getElementById("moving-line").style.display = "none"
               break;
             }
           
@@ -87,6 +88,7 @@ var mouseDown = function(e) {
               if(inside([getCoorX(x_one),getCoorY(y_one)], resizePoints)){
                 found = true;
                 resize = 0;
+                document.getElementById("moving-line").style.display = "block"
                 break;
               }
           }
@@ -264,6 +266,7 @@ var mouseUp = function(e){
 
   if (drag) {
     document.getElementById("moving-line").style.display = "block"
+    document.getElementById("moving-line").innerHTML = "Memindahkan titik"
   } else{
     document.getElementById("moving-line").style.display = "none"
   }
