@@ -45,7 +45,30 @@ function renderPoints() {
     }
   })
 }
+function downloadObjectAsJson(){
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allShapes));
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href",     dataStr);
+  downloadAnchorNode.setAttribute("download", "download.json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+function readSingleFile(evt) {
+  var f = evt.target.files[0];
 
+  if (f) {
+      var r = new FileReader();
+      r.onload = function (e) {
+          var contents = e.target.result;
+          allShapes = JSON.parse(contents);
+          renderAll();
+      }
+      r.readAsText(f);
+  } else {
+      alert("Failed to load file");
+  }
+}
 const renderAll = () => {
    allShapes.forEach((shape) => {
      render(shape.method, shape.vertices, shape.rgbVal)
