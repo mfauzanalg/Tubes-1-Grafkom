@@ -16,6 +16,13 @@ var dragged = {
   param: null
 }
 
+
+var isResizing = false
+var resizePoints = []
+var idx = 0
+var x_inter = 0;
+var y_inter = 0;
+
 const renderPoly = (coorX, coorY) => {
   polyArr = []
   var n = parseInt(document.getElementById('side-input').value)
@@ -33,16 +40,22 @@ const renderPoly = (coorX, coorY) => {
 
 
 var mouseDown = function(e) {
-  console.log(getCoorX(e.pageX),getCoorY(e.pageY));
-  console.log(allShapes)
-  console.log(gl.TRIANGLE_FAN);
+  // console.log(getCoorX(e.pageX),getCoorY(e.pageY));
+  // console.log(allShapes)
+  // console.log(gl.TRIANGLE_FAN);
+
+  if(isResizing) {
+    isResizing = false
+    resizePoints = []
+    idx = 0
+    x_inter = 0
+    y_inter = 0
+  }
+
   if(change == 1 && !isDrawing){
       x_one = e.pageX;
       y_one = e.pageY;
       var found = false;
-      // console.log(allShapes[0].method);
-      // console.log(allShapes[0]);
-      // console.log(colorRGB);
       hexVal =  document.getElementById("color-input").value
       colorRGB = hexToRgbNew(hexVal.replace('#',''))
       for (var i=0 ; i<allShapes.length;i++) {
@@ -71,12 +84,13 @@ var mouseDown = function(e) {
       y_one = e.pageY;
       var found = false;
       for (var i=0 ; i<allShapes.length;i++) {
+            idx = i
             if(allShapes[i].vertices.length == 8){
-              var points = []
+              resizePoints = []
               for (var j=0; j<allShapes[i].vertices.length;j=j+2){
-                points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
+                resizePoints.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
               }
-              if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
+              if(inside([getCoorX(x_one),getCoorY(y_one)], resizePoints)){
                 found = true;
                 resize = 0;
                 break;
@@ -84,11 +98,10 @@ var mouseDown = function(e) {
           }
       }
       
-      
-      // console.log(found);
       if(found){
-        renderResize((points[0][0]+points[2][0])/2, (points[0][1]+points[2][1])/2)
-        allShapes[i].vertices = resizeArr;
+        x_inter = e.pageX
+        y_inter = e.pageY
+        isResizing = true
         renderAll();
         resize = 0;
       }
@@ -97,7 +110,6 @@ var mouseDown = function(e) {
     x_one = e.pageX 
     y_one = e.pageY;
     if (geoObject == "line"){
-      // console.log("line down")
       isDrawing = !isDrawing;
     } else if (geoObject == "square"){
       isDrawing = !isDrawing
@@ -196,23 +208,6 @@ var mouseMove = function(e) {
     render(drawMethod, verticesArr, colorRGB)
   }
 
-  // else if (geoObject == "square"){
-  //   x_one = e.pageX
-  //   y_one = e.pageY
-
-  //   if(x_one < 40){
-  //     x_one = 40
-  //   }
-
-  //   if (y_one < 40){
-  //     y_one = 40
-  //   }
-
-  //   renderSquare()
-  //   hexVal =  document.getElementById("color-input").value
-  //   colorRGB = hexToRgbNew(hexVal.replace('#',''))
-  // }
-
   if (isDrawingRandom) {
     hexVal =  document.getElementById("color-input").value
     colorRGB = hexToRgbNew(hexVal.replace('#',''))
@@ -229,6 +224,12 @@ var mouseMove = function(e) {
   else if (drag) {
     allShapes[dragged.shape_id].vertices[dragged.param*2] = getCoorX(x_two)
     allShapes[dragged.shape_id].vertices[dragged.param*2+1] = getCoorY(y_two)
+    renderAll()
+  }
+
+  if (isResizing) {
+    renderResize((resizePoints[0][0]+resizePoints[2][0])/2, (resizePoints[0][1]+resizePoints[2][1])/2, e.pageX, (resizePoints[2][0]-resizePoints[0][0]))
+    allShapes[idx].vertices = resizeArr;
     renderAll()
   }
 };
@@ -282,9 +283,26 @@ var mouseUp = function(e){
   }
 };
 
-var renderResize = (a,b) => {
-  const size = parseInt(document.getElementById('size-input').value);
-  var coorSize = size/500;
+var renderResize = (a,b,e,sizedef) => {
+
+  var middleX_new = 0;
+  if (a > 0){
+    middleX_new = 250 + a*250
+  }
+  else {
+    new_a = a*-1
+    middleX_new = new_a*250
+    middleX_new = 250 - middleX_new
+  }
+
+  var coorX = 0
+  if(e >= a){
+    coorX = (e - middleX_new) / middleX_new
+  }
+  e = coorX
+
+  var coorSize = e
+  
   resizeArr = [
     a-coorSize,
     b+coorSize,

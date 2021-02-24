@@ -90,6 +90,4 @@ function inside(point, vs) {
       if (intersect) inside = !inside;
   }
   return inside;
-  // var polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
-  // inside([ 1.5, 1.5 ], polygon); // true
 }
