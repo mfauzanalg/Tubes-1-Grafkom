@@ -286,13 +286,13 @@ var renderResize = (a,b) => {
   const size = parseInt(document.getElementById('size-input').value);
   var coorSize = size/500;
   resizeArr = [
-    a-coorSize-a,
+    a-coorSize,
     b+coorSize,
-    a+coorSize-a,
+    a+coorSize,
     b+coorSize,
-    a+coorSize-a,
+    a+coorSize,
     b-coorSize,
-    a-coorSize-a,
+    a-coorSize,
     b-coorSize,
   ]
 }
