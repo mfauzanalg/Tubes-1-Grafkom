@@ -70,3 +70,7 @@ var change = 0;
 const clickChange = () => {
   change = 1;
 }
+var resize = 0;
+const clickResize = () => {
+  resize = 1;
+}

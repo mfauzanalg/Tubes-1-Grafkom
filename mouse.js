@@ -8,6 +8,7 @@ var verticesArr = [];
 var isDrawing = false;
 var hexVal;
 var colorRGB;
+var resizeArr = [];
 var polyArr;
 var sideInput;
 var dragged = {
@@ -32,7 +33,7 @@ const renderPoly = (coorX, coorY) => {
 
 
 var mouseDown = function(e) {
-  if(change == 1){
+  if(change == 1 && !isDrawing){
       x_one = e.pageX;
       y_one = e.pageY;
       var found = false;
@@ -42,7 +43,7 @@ var mouseDown = function(e) {
       hexVal =  document.getElementById("color-input").value
       colorRGB = hexToRgbNew(hexVal.replace('#',''))
       for (var i=0 ; i<allShapes.length;i++) {
-          if(allShapes[i].method == 6){ //polygon
+          
             var points = []
             for (var j=0; j<allShapes[i].vertices.length;j=j+2){
               points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
@@ -50,9 +51,10 @@ var mouseDown = function(e) {
             // console.log(points);
             if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
               found = true;
+              change = 0;
               break;
             }
-          }
+          
       }
       // console.log(found);
       if(found){
@@ -60,7 +62,31 @@ var mouseDown = function(e) {
         renderAll();
       }
       
-      change = 0;
+      
+  }
+  if(resize == 1 && !isDrawing){
+    x_one = e.pageX;
+      y_one = e.pageY;
+      var found = false;
+      for (var i=0 ; i<allShapes.length;i++) {
+            var points = []
+            for (var j=0; j<allShapes[i].vertices.length;j=j+2){
+              points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
+            }
+            if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
+              found = true;
+              resize = 0;
+              break;
+            }
+          
+      }
+      // console.log(found);
+      if(found){
+        renderResize((points[0][0]+points[3][0])/2, (points[0][1]+points[3][1])/2)
+        allShapes[i].vertices = resizeArr;
+        allShapes[i].drawMethod = gl.TRIANGLE_STRIP;
+        renderAll();
+      }
   }
   if(geoObject != ''){
     x_one = e.pageX 
@@ -252,7 +278,20 @@ var mouseUp = function(e){
     document.getElementById("moving-line").style.display = "none"
   }
 };
-
+var renderResize = (a,b) => {
+  const size = parseInt(document.getElementById('size-input').value);
+  var coorSize = size/500;
+  resizeArr = [
+    a-coorSize,
+    b+coorSize,
+    a+coorSize,
+    b+coorSize,
+    a-coorSize,
+    b-coorSize,
+    a+coorSize,
+    b-coorSize
+  ]
+}
 var renderSquare = () => {
   const size = parseInt(document.getElementById('size-input').value)
   if(x_one < 40){
