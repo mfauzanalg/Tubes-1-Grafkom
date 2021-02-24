@@ -7,7 +7,8 @@ var x_one, x_two, y_one, y_two
 var drawMethod;
 var verticesArr = [];
 var isDrawing = false;
-
+var hexVal;
+var colorRGB;
 
 const drawPoly = () => {
   var polyArr = [];
@@ -20,9 +21,13 @@ const drawPoly = () => {
     polyArr.push(y)
   }
 
+  hexVal =  document.getElementById("color-input").value
+  colorRGB = hexToRgbNew(hexVal.replace('#',''))
+
   const shape = {
     method: gl.TRIANGLE_FAN,
-    vertices: polyArr
+    vertices: polyArr,
+    rgbVal: colorRGB
   }
   allShapes.push(shape)
   renderAll()
@@ -41,7 +46,8 @@ var mouseDown = function(e) {
     renderSquare()
     const shape = {
       method: drawMethod,
-      vertices: verticesArr
+      vertices: verticesArr,
+      rgbVal: colorRGB
     }
     allShapes.push(shape)
     renderAll()
@@ -67,7 +73,9 @@ var mouseMove = function(e) {
       ]
     }
     renderAll()
-    render(drawMethod, verticesArr)
+    hexVal =  document.getElementById("color-input").value
+    colorRGB = hexToRgbNew(hexVal.replace('#',''))
+    render(drawMethod, verticesArr, colorRGB)
   }
 
   if (geoObject == "square"){
@@ -83,7 +91,9 @@ var mouseMove = function(e) {
     }
 
     renderSquare()
-    render(drawMethod, verticesArr)
+    hexVal =  document.getElementById("color-input").value
+    colorRGB = hexToRgbNew(hexVal.replace('#',''))
+    render(drawMethod, verticesArr, colorRGB)
     renderAll()
   }
 };
@@ -92,7 +102,8 @@ var mouseUp = function(e){
   if (!isDrawing && geoObject != '') {
     const shape = {
       method: drawMethod,
-      vertices: verticesArr
+      vertices: verticesArr,
+      rgbVal: colorRGB
     }
     
     allShapes.push(shape)

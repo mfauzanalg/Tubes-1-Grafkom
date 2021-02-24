@@ -27,12 +27,12 @@ gl.attachShader(program, vertexShader)
 gl.attachShader(program, fragmentShader)
 gl.linkProgram(program)
 
-function render(type, vertices) {
-  var n = initBuffers(new Float32Array(vertices));
+function render(type, vertices, rgbVal) {
+  var n = initBuffers(new Float32Array(vertices), rgbVal);
   gl.drawArrays(type, 0, n);
 }
 
-function initBuffers(vertices) {
+function initBuffers(vertices, rgbVal) {
   // Binding data
   var buffer = gl.createBuffer()
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
@@ -42,9 +42,6 @@ function initBuffers(vertices) {
   gl.useProgram(program)
 
   // Set the color
-  var hexVal =  document.getElementById("color-input").value
-  var rgbVal = hexToRgbNew(hexVal.replace('#',''))
-
   program.color = gl.getUniformLocation(program, 'color')
   gl.uniform4fv(program.color, getArrColor(rgbVal[0], rgbVal[1], rgbVal[2], 1))
 
@@ -58,6 +55,6 @@ function initBuffers(vertices) {
 
 const renderAll = () => {
    allShapes.forEach((shape) => {
-     render(shape.method, shape.vertices)
+     render(shape.method, shape.vertices, shape.rgbVal)
    })
 }
