@@ -52,3 +52,14 @@ label{
 .title-help {
   font-weight: 800;
 }
+
+#moving-line {
+  position: fixed;
+  top: 10;
+  left: 10;
+  font-size: 10px;
+  background-color: greenyellow;
+  border-radius: 2px;
+  display: none; 
+  z-index: 999;
+}

@@ -25,7 +25,7 @@ function initBuffers(vertices, rgbVal) {
 }
 
 function renderPoints() {
-  const pointSize = 10/middleX
+  const pointSize = 8/middleX
   allShapes.forEach((shape, idx) => {
     var n = shape.vertices.length/2 // # of points
     for (var i = 0; i < n; i++){
@@ -43,7 +43,6 @@ function renderPoints() {
         param: i,
         vertex: pointVert
       })
-      console.log(pointVert)
       render(gl.TRIANGLE_STRIP, pointVert, hexToRgbNew('000000'))
     }
   })
@@ -81,15 +80,11 @@ const renderAll = () => {
    renderPoints()
 }
 function inside(point, vs) {
-  console.log(vs)
   var x = point[0], y = point[1];
-  console.log([x,y])
   var inside = false;
   for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
       var xi = vs[i][0], yi = vs[i][1];
-      console.log('i '+[xi,yi])
       var xj = vs[j][0], yj = vs[j][1];
-      console.log('j '+[xj,yj])
       var intersect = ((yi > y) != (yj > y))
           && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
       if (intersect) inside = !inside;

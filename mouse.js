@@ -35,9 +35,9 @@ var mouseDown = function(e) {
       x_one = e.pageX;
       y_one = e.pageY;
       var found = false;
-      console.log(allShapes[0].method);
-      console.log(allShapes[0]);
-      console.log(colorRGB);
+      // console.log(allShapes[0].method);
+      // console.log(allShapes[0]);
+      // console.log(colorRGB);
       hexVal =  document.getElementById("color-input").value
       colorRGB = hexToRgbNew(hexVal.replace('#',''))
       for (var i=0 ; i<allShapes.length;i++) {
@@ -46,14 +46,14 @@ var mouseDown = function(e) {
             for (var j=0; j<allShapes[i].vertices.length;j=j+2){
               points.push([allShapes[i].vertices[j],allShapes[i].vertices[j+1]])
             }
-            console.log(points);
+            // console.log(points);
             if(inside([getCoorX(x_one),getCoorY(y_one)], points)){
               found = true;
               break;
             }
           }
       }
-      console.log(found);
+      // console.log(found);
       if(found){
         allShapes[i].rgbVal = colorRGB;
         renderAll();
@@ -178,6 +178,12 @@ var mouseUp = function(e){
     allShapes.push(shape)
     renderAll()
     geoObject = ""
+  }
+
+  if (drag) {
+    document.getElementById("moving-line").style.display = "block"
+  } else{
+    document.getElementById("moving-line").style.display = "none"
   }
 };
 
