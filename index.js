@@ -1,33 +1,3 @@
-// Prepare Vertex
-const vert = `
-attribute vec2 position;
-  void main() {
-    gl_Position = vec4(position, 0.0, 1.0);
-    gl_PointSize = 5.0;
-  }
-`
-// Prepare Fragment
-const frag = `
-precision highp float;
-uniform vec4 color;
-void main() {
-  gl_FragColor = color;
-}
-`
-
-var vertexShader = gl.createShader(gl.VERTEX_SHADER)
-gl.shaderSource(vertexShader, vert)
-gl.compileShader(vertexShader)
-
-var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
-gl.shaderSource(fragmentShader, frag)
-gl.compileShader(fragmentShader)
-
-var program = gl.createProgram()
-gl.attachShader(program, vertexShader)
-gl.attachShader(program, fragmentShader)
-gl.linkProgram(program)
-
 function render(type, vertices, rgbVal) {
   var n = initBuffers(new Float32Array(vertices), rgbVal);
   gl.drawArrays(type, 0, n);
@@ -54,9 +24,32 @@ function initBuffers(vertices, rgbVal) {
   return vertices.length / 2;
 }
 
+function renderPoints() {
+  const pointSize = 5/middleX
+  allShapes.forEach((shape, idx) => {
+    var n = shape.vertices.length/2 // # of points
+    for (var i = 0; i < n; i++){
+      x = shape.vertices[i*2]-pointSize/2
+      y = shape.vertices[i*2+1]-pointSize/2
+
+      console.log(x)
+      console.log(y)
+
+      var pointVert = [
+        x, y,
+        x+pointSize, y,
+        x, y+pointSize,
+        x+pointSize, y+pointSize
+      ]
+      render(gl.TRIANGLE_STRIP, pointVert, hexToRgbNew('000000'))
+    }
+  })
+}
+
 const renderAll = () => {
    allShapes.forEach((shape) => {
      render(shape.method, shape.vertices, shape.rgbVal)
      render(gl.POINTS, shape.vertices, [0, 0, 0])
    })
+   renderPoints()
 }
